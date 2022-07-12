@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {
   Dimensions,
   StyleSheet,
+  Text,
   TouchableWithoutFeedback,
   View,
 } from "react-native";
@@ -47,7 +48,6 @@ const App = () => {
   const jump = () => {
     if (!isGameOver && flapiBottom < screenHeight) {
       setflapiBottom((flapiBottom) => flapiBottom + 40);
-      console.log("jumped");
     }
   };
 
@@ -90,9 +90,6 @@ const App = () => {
     setIsGameOver(true);
   };
   useEffect(() => {
-    console.log(obstaclesLeft);
-    console.log(screenWidth / 2);
-    console.log(obstaclesLeft > screenWidth / 2);
     if (
       ((flapiBottom < obstaclesNegHeight + obstacleHeight + 30 ||
         flapiBottom > obstaclesNegHeight + obstacleHeight + gap - 30) &&
@@ -103,7 +100,6 @@ const App = () => {
         obstaclesLeftTwo > screenWidth / 2 - 30 &&
         obstaclesLeftTwo < screenWidth / 2 + 30)
     ) {
-      alert("game over");
       gameOver();
     }
   });
@@ -111,6 +107,19 @@ const App = () => {
   return (
     <TouchableWithoutFeedback onPress={jump}>
       <View style={styles.container}>
+        {isGameOver && (
+          <Text
+            style={{
+              color: "white",
+              fontSize: 40,
+              alignSelf: "center",
+              zIndex: 11,
+              backgroundColor: "black",
+            }}
+          >
+            SCORE: {score}
+          </Text>
+        )}
         <Obstacles
           obstaclesLeft={obstaclesLeft}
           obstacleHeight={obstacleHeight}
@@ -137,6 +146,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "fefefe",
+    justifyContent: "center",
   },
 });
 export default App;
